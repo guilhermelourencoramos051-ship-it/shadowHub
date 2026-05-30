@@ -1,5 +1,5 @@
 -- ╔════════════════════════════════════════════════════════════════════════════╗
--- ║  SHADOW HUB - VERSÃO ADMIN (BANDIDOQUER67REZENH ONLY)                      ║
+-- ║  SHADOW HUB - VERSÃO ADMIN (SEM RESTRIÇÕES)                                ║
 -- ║  40+ Funções | Acesso Total | Sem Limite                                   ║
 -- ║  Compatível com Real Executor                                              ║
 -- ║  by Bandidoquer67rezenh                                                    ║
@@ -113,6 +113,7 @@ if game.PlaceId ~= CORRECT_PLACEID then
 end
 
 print("✅ PlaceID Verificado!")
+print("✅ SHADOW HUB ADMIN - ACESSO TOTAL DESBLOQUEADO!")
 
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
@@ -120,48 +121,6 @@ local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 local Workspace = workspace
 local TweenService = game:GetService("TweenService")
-
--- ══════════════════════════════════════════════════════════════════════════════
--- 🔐 VERIFICAÇÃO DE ADMIN (SÓ VOCÊ)
--- ══════════════════════════════════════════════════════════════════════════════
-
-local Player = Players.LocalPlayer
-
--- Verifica se é você
-if Player.Name ~= "Bandidoquer67rezenh" then
-	local errorGui = Instance.new("ScreenGui")
-	errorGui.Name = "ErrorScreen"
-	errorGui.ResetOnSpawn = false
-	errorGui.Parent = Player:WaitForChild("PlayerGui")
-	
-	local errorFrame = Instance.new("Frame")
-	errorFrame.Size = UDim2.new(0, 450, 0, 250)
-	errorFrame.Position = UDim2.new(0.5, -225, 0.5, -125)
-	errorFrame.BackgroundColor3 = Color3.fromRGB(50, 20, 20)
-	errorFrame.Parent = errorGui
-	
-	local corner = Instance.new("UICorner")
-	corner.CornerRadius = UDim.new(0, 12)
-	corner.Parent = errorFrame
-	
-	local errorLabel = Instance.new("TextLabel")
-	errorLabel.Size = UDim2.new(1, 0, 1, 0)
-	errorLabel.BackgroundTransparency = 1
-	errorLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
-	errorLabel.Text = "❌ ACESSO NEGADO!\n\n🔐 Esta é a versão ADMIN\nSomente para: Bandidoquer67rezenh\n\n👤 Seu usuário: " .. Player.Name .. "\n\n⚠️ Use a versão FREE se disponível"
-	errorLabel.TextSize = 14
-	errorLabel.Font = Enum.Font.GothamBold
-	errorLabel.TextWrapped = true
-	errorLabel.Parent = errorFrame
-	
-	warn("❌ SHADOW HUB ADMIN - Acesso Negado!")
-	warn("Este script é apenas para Bandidoquer67rezenh")
-	print("Se você é outro jogador, use a versão FREE do script")
-	return
-end
-
-print("✅ ACESSO DE ADMIN CONFIRMADO!")
-print("👑 Bem-vindo, Bandidoquer67rezenh!")
 
 -- ══════════════════════════════════════════════════════════════════════════════
 -- 📊 ESTADO GLOBAL
@@ -210,6 +169,7 @@ local State = {
 	VoidTeleport = false,
 }
 
+local Player = Players.LocalPlayer
 local Character = Player.Character
 local Humanoid = Character and Character:FindFirstChildOfClass("Humanoid")
 
@@ -354,7 +314,7 @@ local function CreateGUI()
 	keyInfoLabel.Position = UDim2.new(0, 0, 0, 50)
 	keyInfoLabel.BackgroundColor3 = Color3.fromRGB(50, 20, 50)
 	keyInfoLabel.TextColor3 = Color3.fromRGB(255, 150, 255)
-	keyInfoLabel.Text = "👑 ADMIN MODE | SEM LIMITE"
+	keyInfoLabel.Text = "👑 ADMIN MODE | ACESSO TOTAL"
 	keyInfoLabel.TextSize = 14
 	keyInfoLabel.Font = Enum.Font.GothamBold
 	keyInfoLabel.TextWrapped = true
@@ -712,7 +672,7 @@ function AddAdvancedTab(parent)
 	end)
 end
 
--- ══════════════════════════════���═══════════════════════════════════════════════
+-- ══════════════════════════════════════════════════════════════════════════════
 -- 🛠️ FUNÇÕES UTILITÁRIAS
 -- ══════════════════════════════════════════════════════════════════════════════
 
@@ -904,8 +864,8 @@ Player.CharacterAdded:Connect(function(newCharacter)
 end)
 
 print("✅ SHADOW HUB - VERSÃO ADMIN CARREGADA!")
-print("👑 Bem-vindo, Bandidoquer67rezenh!")
+print("👑 ACESSO TOTAL DESBLOQUEADO!")
 print("🎮 PlaceID: " .. game.PlaceId)
 print("🔗 Discord: " .. DISCORD_LINK)
 print("⚡ 40+ Funções Disponíveis")
-print("🔓 Acesso Total Sem Restrições")
+print("🔓 SEM RESTRIÇÕES - NENHUMA VERIFICAÇÃO DE NOME")
