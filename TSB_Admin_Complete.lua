@@ -3,7 +3,123 @@
 -- ║  40+ Funções | Sistema de Key Semanal | Safe Mode Avançado                 ║
 -- ║  Compatível com Real Executor                                              ║
 -- ║  by LOS67ZITOSDIZEN67 (Admin Supremo)                                      ║
+-- ║  Discord: https://discord.gg/JtE2rx2eGx                                    ║
 -- ╚════════════════════════════════════════════════════════════════════════════╝
+
+-- ══════════════════════════════════════════════════════════════════════════════
+-- 📢 DISCORD AUTO-COPY SYSTEM
+-- ══════════════════════════════════════════════════════════════════════════════
+
+local DISCORD_LINK = "https://discord.gg/JtE2rx2eGx"
+
+local function CopyDiscordLink()
+	-- Copia o link para o clipboard
+	if setclipboard then
+		setclipboard(DISCORD_LINK)
+	end
+	
+	-- Cria notificação visual de cópia
+	local notifGui = Instance.new("ScreenGui")
+	notifGui.Name = "DiscordNotification"
+	notifGui.ResetOnSpawn = false
+	notifGui.ZIndex = 9999
+	notifGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	
+	local notifFrame = Instance.new("Frame")
+	notifFrame.Size = UDim2.new(0, 500, 0, 120)
+	notifFrame.Position = UDim2.new(0.5, -250, 0.5, -60)
+	notifFrame.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
+	notifFrame.BorderSizePixel = 0
+	notifFrame.Parent = notifGui
+	
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0, 15)
+	corner.Parent = notifFrame
+	
+	local logo = Instance.new("TextLabel")
+	logo.Size = UDim2.new(1, 0, 0.35, 0)
+	logo.BackgroundTransparency = 1
+	logo.TextColor3 = Color3.fromRGB(255, 255, 255)
+	logo.Text = "🔗 DISCORD COPIADO!"
+	logo.TextSize = 20
+	logo.Font = Enum.Font.GothamBold
+	logo.Parent = notifFrame
+	
+	local linkLabel = Instance.new("TextLabel")
+	linkLabel.Size = UDim2.new(1, 0, 0.65, 0)
+	linkLabel.Position = UDim2.new(0, 0, 0.35, 0)
+	linkLabel.BackgroundTransparency = 1
+	linkLabel.TextColor3 = Color3.fromRGB(220, 221, 225)
+	linkLabel.Text = DISCORD_LINK
+	linkLabel.TextSize = 14
+	linkLabel.Font = Enum.Font.Gotham
+	linkLabel.TextWrapped = true
+	linkLabel.Parent = notifFrame
+	
+	-- Animação de fade out
+	local startTime = tick()
+	local duration = 4
+	
+	spawn(function()
+		while notifGui.Parent do
+			local elapsed = tick() - startTime
+			if elapsed >= duration then
+				notifGui:Destroy()
+				break
+			end
+			
+			local progress = elapsed / duration
+			notifFrame.BackgroundTransparency = progress * 0.3
+			
+			wait(0.016)
+		end
+	end)
+	
+	print("✅ Discord Link Copiado: " .. DISCORD_LINK)
+end
+
+-- Executa cópia automática ao carregar
+spawn(function()
+	wait(0.5)
+	CopyDiscordLink()
+end)
+
+-- ══════════════════════════════════════════════════════════════════════════════
+-- 🔧 VERIFICAÇÃO DO PLACEID - THE STRONGEST BATTLEGROUND
+-- ══════════════════════════════════════════════════════════════════════════════
+
+local TSB_PLACEID = 1420625081
+
+if game.PlaceId ~= TSB_PLACEID then
+	local errorGui = Instance.new("ScreenGui")
+	errorGui.Name = "ErrorScreen"
+	errorGui.ResetOnSpawn = false
+	errorGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	
+	local errorFrame = Instance.new("Frame")
+	errorFrame.Size = UDim2.new(0, 400, 0, 200)
+	errorFrame.Position = UDim2.new(0.5, -200, 0.5, -100)
+	errorFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 50)
+	errorFrame.Parent = errorGui
+	
+	local errorLabel = Instance.new("TextLabel")
+	errorLabel.Size = UDim2.new(1, 0, 1, 0)
+	errorLabel.BackgroundTransparency = 1
+	errorLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+	errorLabel.Text = "❌ ERRO!\n\nEste script é APENAS para:\n🎮 The Strongest Battleground\n\nSeu PlaceID: " .. game.PlaceId .. "\nPlaceID Correto: " .. TSB_PLACEID
+	errorLabel.TextSize = 14
+	errorLabel.Font = Enum.Font.GothamBold
+	errorLabel.TextWrapped = true
+	errorLabel.Parent = errorFrame
+	
+	warn("❌ SHADOW HUB - PlaceID Incorreto!")
+	print("Seu PlaceID: " .. game.PlaceId)
+	print("PlaceID Esperado (TSB): " .. TSB_PLACEID)
+	
+	return
+end
+
+print("✅ PlaceID Verificado - The Strongest Battleground Detectado!")
 
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
@@ -1026,6 +1142,11 @@ function AddAdminTab(parent)
 			CreateNotification("🎮 Todos teleportados", 2)
 		end)
 	end
+	
+	-- Discord Copy Button
+	CreateButton(parent, "🔗 Copiar Discord", Color3.fromRGB(88, 101, 242), function()
+		CopyDiscordLink()
+	end)
 end
 
 -- ══════════════════════════════════════════════════════════════════════════════
@@ -1242,7 +1363,6 @@ RunService.Heartbeat:Connect(function()
 	
 	-- ARENA SUB
 	if State.SubActive then
-		-- Auto-encontra inimigo
 		for _, p in pairs(Players:GetPlayers()) do
 			if p ~= Player and p.Character then
 				State.SubTarget = p
@@ -1264,20 +1384,17 @@ RunService.Heartbeat:Connect(function()
 	if State.SafeModeActive and State.SafePlatform then
 		local healthPercent = (Humanoid.Health / Humanoid.MaxHealth) * 100
 		
-		-- Teleporta para plataforma quando vida < 25%
 		if healthPercent < 25 and not State.SafeModeTriggered then
 			State.SafeModeTriggered = true
 			hrp.CFrame = State.SafePlatform.CFrame + Vector3.new(0, 5, 0)
 			CreateNotification("🛡️ Safe Mode Ativado!", 2)
 		end
 		
-		-- Volta ao normal quando vida > 51%
 		if healthPercent > 51 and State.SafeModeTriggered then
 			State.SafeModeTriggered = false
 			CreateNotification("✅ Vida Recuperada", 1)
 		end
 		
-		-- Mantém player na plataforma
 		if State.SafeModeTriggered then
 			local platformY = State.SafePlatform.Position.Y
 			if hrp.Position.Y < platformY - 30 then
@@ -1291,7 +1408,6 @@ end)
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
 	if gameProcessed then return end
 	
-	-- Click TP
 	if State.ClickTP and input.UserInputType == Enum.UserInputType.MouseButton1 then
 		local mouse = Player:GetMouse()
 		if mouse.Target then
@@ -1299,7 +1415,6 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 		end
 	end
 	
-	-- TP Jump
 	if State.TeleportJump and input.KeyCode == Enum.KeyCode.Space then
 		if Character and Character:FindFirstChild("HumanoidRootPart") then
 			local hrp = Character:FindFirstChild("HumanoidRootPart")
@@ -1410,7 +1525,6 @@ else
 	CreateGUI()
 end
 
--- Reconecta ao respawnar
 Player.CharacterAdded:Connect(function(newCharacter)
 	Character = newCharacter
 	Humanoid = Character:WaitForChild("Humanoid")
@@ -1418,6 +1532,9 @@ Player.CharacterAdded:Connect(function(newCharacter)
 end)
 
 print("✅ SHADOW HUB CARREGADO!")
+print("🎮 PlaceID: " .. game.PlaceId .. " (The Strongest Battleground)")
 print("🔐 Admin Supremo: LOS67ZITOSDIZEN67")
+print("🔗 Discord: " .. DISCORD_LINK)
 print("⚡ 40+ Funções Disponíveis")
 print("🛡️ Safe Mode: Ativado")
+print("📋 Discord Link Copiado Automaticamente!")
